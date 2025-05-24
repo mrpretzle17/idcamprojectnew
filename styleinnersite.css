@@ -1,0 +1,772 @@
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap');
+
+/* Global Styles */
+body {
+  overflow-y: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Header Styles */
+/* .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 9vh;
+    background-color: #333333;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header .left-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.2rem;
+    font-weight: 350;
+}
+
+.header .right-section {
+    margin-right: 30px;
+    display: flex;
+    gap: 20px;
+    font-size: 1.2rem;
+    font-weight: 350;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.header .right-section a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 350;
+    transition: 0.3s;
+}
+
+.header .right-section a:hover {
+    color: #bbbbbb;
+    text-decoration: none;
+} */
+
+/* Vertical Bar Styles */
+.vertical-bar {
+    position: fixed;
+    top: 9vh; /* Directly below the header */
+    right: 0;
+    width: 25vw;
+    height: 91vh; /* Full height minus header */
+    background-color: #252525;
+    /* overflow-y: auto; */
+    z-index: 9;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.vertical-bar .button {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 15px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: left;
+    border-bottom: 1px solid #444444;
+    cursor: pointer;
+}
+
+.vertical-bar .button:hover {
+    background-color: #444444;
+    color: #dddddd;
+}
+
+/* Main Content Section */
+.videoex {
+    position: relative;
+    height: 91vh;
+    margin-top: 9vh; /* Space below the header */
+    left: 0;
+    width: 47vw;
+    background-color: #7a1c7a;
+    color: #111;
+    padding: 55px 20px 10px 20px;
+    /* border-radius: 4px; */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.videoex img {
+    width: 100%;
+    height: auto;
+
+}
+
+#time {
+    text-align: right;
+    font-size: 1rem;
+    /* color: #111; */
+}
+
+/* Side Bar (Collapsed State) */
+.side-bar {
+    text-align: center;
+    position: fixed;
+    top: 9vh;
+    right: 0;
+    height: 91vh;
+    width: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    z-index: 11;
+    font-weight: 300;
+
+}
+.side-bar h2 {
+    font-weight: 400;
+}
+#mysidenav{
+    padding-top: 70px;
+}
+#mysidenav2{
+    padding-top: 70px;
+}
+.side-bar form{
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    justify-content: center;
+}
+.side-bar input{
+    width: 20vw;
+    height: 30px;
+    background: linear-gradient(to right, #151315 0%, #000000 100%);
+    font-size: 17px;
+    color: #fff;
+    border: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding-bottom:10px;
+}
+.side-bar button {
+    margin-top: 10px;
+    width: 20vw;
+    height: 30px;
+}
+.bottombuttons button {
+  margin-top: 10px;
+  width: 20vw;
+  height: 30px;
+  background: #4f2c50;
+  color: white;
+  border: none;
+  border-radius: 0.5px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.bottombuttons button:hover {
+  background: #5e3454;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+.side-bar .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 36px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.log-visual{
+    position: absolute;
+    top:9vh;
+    width: 25.5vw;
+    background-color: #444444;
+    right: 25vw;
+    text-align: center;
+    font-weight: 400;
+    /* font-size: ; */
+    height: 91vh;
+    /* overflow-y: auto; */
+    z-index: 9;
+    
+}
+
+.addface-visual{
+  display: none;
+  position: absolute;
+  top:9vh;
+  width: 25.5vw;
+  background-color: #444444;
+  right: 25vw;
+  font-weight: 400;
+  height: 91vh;
+  z-index: 11;
+}
+.addface-visual h2{
+  font-weight: 400;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #7b7777;
+  text-align: center;
+}
+
+.addface-visual form{
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+}
+
+/* .addface-visual button{
+  margin-top: 10px;
+  width: 20vw;
+  height: 30px;
+} */
+.addface-visual button {
+  margin-top: 10px;
+  width: 22vw;
+  height: 40px;
+  background: #712276; /* Blue button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addface-visual button:hover {
+  background: #70227692; /* Darker blue on hover */
+}
+.addface-visual label {
+  align-self: flex-start;
+  margin-bottom: 5px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* .addface-visual input{
+  width: 20vw;
+  height: 30px;
+  background: linear-gradient(to right, #151315 0%, #000000 100%);
+  font-size: 17px;
+  color: #fff;
+  border: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding-bottom:10px;
+  margin-bottom: 2vh;
+} */
+
+.addface-visual input {
+  width: 20vw;
+  height: 40px;
+  background: #1a1a1a;
+  font-size: 16px;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 0 12px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.addface-visual input:focus {
+  border-color: #a1098b;
+  outline: none;
+  box-shadow: 0 0 3px rgba(113, 21, 104, 0.5);
+}
+
+
+.removeface-visual{
+  display: none;
+  position: absolute;
+  top:9vh;
+  width: 25.5vw;
+  background-color: #444444;
+  right: 25vw;
+  font-weight: 400;
+  /* font-size: ; */
+  height: 91vh;
+  /* overflow-y: auto; */
+  z-index: 11;
+}
+.removeface-visual h2{
+  font-weight: 400;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #7b7777;
+  text-align: center;
+}
+
+.removeface-visual form{
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center elements horizontally */
+  justify-content: center;
+}
+
+.removeface-visual button {
+  margin-top: 10px;
+  width: 22vw;
+  height: 40px;
+  background: #712276; /* Blue button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 2vh;
+}
+
+.removeface-visual button:hover {
+  background: #70227692; /* Darker blue on hover */
+}
+.removeface-visual label {
+  align-self: flex-start;
+  margin-bottom: 5px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.removeface-visual input {
+  width: 20vw;
+  height: 40px;
+  background: #1a1a1a;
+  font-size: 16px;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 0 12px;
+  transition: border-color 0.3s ease;
+}
+.or-text{
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+
+}
+
+.removeface-visual input:focus {
+  border-color: #a1098b;
+  outline: none;
+  box-shadow: 0 0 3px rgba(113, 21, 104, 0.5);
+}
+
+/* .removeface-visual button{
+  margin-top: 10px;
+  width: 20vw;
+  height: 30px;
+}
+
+.removeface-visual input{
+  width: 20vw;
+  height: 30px;
+  background: linear-gradient(to right, #151315 0%, #000000 100%);
+  font-size: 17px;
+  color: #fff;
+  border: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding-bottom:10px;
+} */
+
+.attendance-visual{
+  display: none;
+  position: absolute;
+  top:9vh;
+  width: 25.5vw;
+  background-color: #444444;
+  right: 25vw;
+  font-weight: 400;
+  /* font-size: ; */
+  height: 91vh;
+  /* overflow-y: auto; */
+  z-index: 10;
+  
+}
+
+.attendance-visual h2{
+  font-weight: 400;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #7b7777;
+  text-align: center;
+}
+.loglist{
+    height: 6vh;
+    overflow-y: auto;
+    flex-direction: column-reverse;
+}
+.log-visual h2{
+    font-weight: 400;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #7b7777;
+}
+#name_list1{
+    padding-bottom: 1vh;
+    /* padding-left: 1vw; */
+    text-transform: capitalize;
+    display: flex;
+    /* flex-direction: column;  Stack elements vertically */
+    /* color: #6a0359; */
+    text-align: left;
+    /* border-top: 1px solid #7b7777; */
+    overflow-y: auto;
+}
+#name_list1 div{
+    height: 3vh;
+    /* padding-left: 1vw; */
+    padding: 1vh;
+    border-bottom: 1px solid #7b7777;
+}
+#name_list1 div:nth-child(even) {
+    background-color: #1a1a1a; /* Black for even children */
+    color: white; /* Optional: adjust text color for readability */
+}
+
+#facesdblistid{
+    padding-bottom: 1vh;
+    /* padding-left: 1vw; */
+    text-transform: capitalize;
+    display: flex;
+    /* flex-direction: column;  Stack elements vertically */
+    flex-direction: column;
+    /* color: #6a0359; */
+    text-align: center;
+    /* border-top: 1px solid #7b7777; */
+    height: 75vh;
+    overflow-y: auto;
+    
+}
+#facesdblistid div{
+    height: 3vh;
+    /* padding-left: 1vw; */
+    padding: 1vh;
+    border-bottom: 1px solid #7b7777;
+}
+#facesdblistid div:nth-child(even) {
+    background-color: #1a1a1a; /* Black for even children */
+    color: white; /* Optional: adjust text color for readability */
+}
+
+
+.errors{
+    position: fixed;
+    top: 5vh;
+    width: 90vw;
+    height: 8vh;
+    border-radius: 0.5vw;
+    text-align: center;
+    background-color: #53024f;
+    padding-top: 2.5vh;
+    font-size: 2.5vh;
+    opacity: 1;                   /* Fully visible */
+    transition: opacity 2s ease-in-out; /* Smooth transition */
+    animation: fadeOut 3s 3s forwards;
+    z-index: 20;
+  }
+  
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* vanejtrinvgietbnihetbhivanejtrinvgietbnihetbhivanejtrinvgietbnihetbhivanejtrinvgietbnihetbhi */
+
+  #mysidenav3 {
+    background-color: #252525;
+  }
+  /* .vertical-bar2 {
+      background-color: #252525;
+      z-index: 9;
+      box-shadow: -2px 0 4px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 0;
+      overflow-x: hidden;
+  } */
+  
+  /* .vertical-bar2 .button {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 0px 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-align: left;
+      border-bottom: 1px solid #444444;
+      cursor: pointer;
+      
+  } */
+  
+  .vertical-bar2 .button:hover {
+      background-color: #444444;
+      color: #dddddd;
+  }
+  
+ /* css code for attendance                                            */
+  
+    /* Style the sidenav links and the dropdown button */
+
+     .vertical-bar2 a, .dropdown-btn {
+    margin-left: 5px;
+      display: block;
+      background: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      outline: none;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 0px 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border: none;
+      border-bottom: 1px solid #444444;
+      border-left: 1px solid #444444;
+    }
+    
+
+    .sidenav a:hover, .dropdown-btn:hover {
+      color: #f1f1f1;
+    }
+    
+
+    .main {
+      margin-left: 200px; 
+      font-size: 20px; 
+      padding: 0px 10px;
+    }
+    
+    .active {
+      background-color: #404040;
+      color: white;
+    }
+    
+        .dropdown-container {
+      display: none;
+      background-color: #262626;
+      margin-left: 1vw;
+  
+    }
+  
+    #addsmthggrade {
+      padding: 0;
+      padding-left: 1vw;
+      height: 50px;
+      padding: 5px;
+      border-left: 1px solid #444444; 
+      display: none; 
+  
+    }
+    #addsmthggrade:hover {
+      background-color: #262626;
+    }
+    #addsmthgclass {
+      padding: 0;
+      padding-left: 1vw;
+      height: 50px;
+      padding: 5px;
+      border-left: 1px solid #444444; 
+      display: none; 
+  
+    }
+    #addsmthgclass:hover {
+      background-color: #262626;
+    }
+    #removesmthgclass {
+      padding: 0;
+      padding-left: 1vw;
+      height: 50px;
+      padding: 5px;
+      border-left: 1px solid #444444; 
+      display: none; 
+  
+    }
+    #removesmthgclass:hover {
+      background-color: #262626;
+    }
+    #numinp {
+      height: 40px;
+      background-color: transparent;
+      border: 1px solid #444444; 
+      color: white;
+      background-color: #232222;
+      width: 70%;
+    }
+  
+    #subinp{
+      height: 40px;
+      background-color: transparent;
+      border: 1px solid #444444; 
+      color: white;
+      background-color: #232222;
+      font-size: 0.8rem;
+      width: 25%;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #subinp:hover{
+      background-color: #181717;
+    }
+    #numinp::placeholder {
+      color: white;
+      font-size: 0.8rem;
+  
+    }
+    
+    .fa-caret-down {
+      float: right;
+      padding-right: 8px;
+    }
+  
+  .buttons_student{
+    display: none;
+    margin-top: 1vh;
+    border: 1px solid #444444;
+    display: flex;
+    justify-content: space-between;
+    width: 60vw;
+    height: 5vh;
+  }
+  .classadd{
+    position: relative;
+    background-color: #222;
+    border: 1px solid #444444;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 25%;
+    color: white;
+    font-size: 0.8rem;
+    
+  }
+  .classadd:hover {
+    background-color: #141414;
+  }
+  #addsmthgstudent{display: none;}
+  .addstudent{
+    padding: 0;
+    margin-top: 1vh;
+    display: flex;
+    justify-content: center;
+    width: 60vw;
+    height: 5vh;
+  }
+  #addstudentnameid{
+      padding: 0;
+      background-color: #222;
+      border: 1px solid #444444;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      height: 5vh;
+      width: 20vw;
+      color: white;
+      font-size: 0.8rem;
+  }
+  #submitstudentnameid{
+    background-color: #222;
+    border: 1px solid #444444;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    height: 5vh;
+    width: 15vw;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  
+
+  
+  .submit-btn {
+    background-color: #222;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    height: 5vh;
+    width: 15vw;
+    font-size: 0.8rem;
+    color: white;
+    border: none;
+    border: 1px solid #444444;
+    cursor: pointer;
+    width: 15vw;
+  }
+  
+  .submit-btn:hover {
+    background-color: #666;
+  }
+  
+  #buttonsforstudents{
+    display: none;
+  } 
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #student-table thead {
+    display: table; /* Ensures proper table alignment for the header */
+    width: 100%; /* Matches tbody width */
+  }
+  
+  #student-table tbody {
+    display: block; /* Allows scrolling within tbody */
+    max-height: 40vh;
+    overflow-y: auto;
+    width: 100%; /* Ensures tbody takes the full width */
+  }
+
+  #student-table2 thead {
+    display: table; /* Ensures proper table alignment for the header */
+    width: 100%; /* Matches tbody width */
+  }
+  
+  #student-table2 tbody {
+    display: block; /* Allows scrolling within tbody */
+    max-height: 40vh;
+    overflow-y: auto;
+    width: 100%; /* Ensures tbody takes the full width */
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    width: 33%; /* Ensures consistent column widths */
+    box-sizing: border-box;
+  }
+  
+  th {
+    background-color: #444; /* Darker header */
+  }
+  
+  tr:nth-child(even) {
+    background-color: #222; /* Dark grey for even rows */
+  }
+  
+  tr:nth-child(odd) {
+    background-color: #333; /* Slightly lighter grey for odd rows */
+  }
+  
+  tr {
+    border-bottom: 1px solid #444; /* Border between rows */
+    display: table; /* Ensures each row behaves like a full-width table row */
+    width: 100%; /* Ensures rows take full width */
+  }
