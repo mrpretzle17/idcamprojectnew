@@ -1,0 +1,47 @@
+import cv2
+import threading
+import time
+from flask import flash
+from config import AppState # bringing in the variables from a diffrent file.
+
+class CamInit:
+    # first func is used to stop and reset the camera and stream variables.
+    # does so by stoppin the continuation of the thread and by setting the variables to none
+    # i was told to use static method because i am not using self.
+    def reset_state():
+        state = AppState() 
+        try:
+            state.running = False 
+            if state.capture_thread and state.capture_thread.is_alive():
+                state.capture_thread.join()
+            if state.camera and state.camera.isOpened():
+                state.camera.release()
+            state.camera = None
+            state.global_frame = None
+        except Exception as e:
+            print(f"Error: {e}")
+            # flash("Error", "success")
+
+
+    #func used for starting cam
+    def start_camera(width, height):
+        state = AppState()
+        try:
+            time.sleep(2)
+            print("[DEBUG] CamInit.start_camera() called")
+
+            from classes.framebg import FrameBG  # i can only import it in here so it wont cause a loop
+
+            # camera settings
+            state.camera = cv2.VideoCapture(0)
+            state.camera.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+            state.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+            state.camera.set(cv2.CAP_PROP_FPS, 30)
+
+            # starts the capture thread process and the running var which makes the camera run in framebg
+            state.running = True
+            state.capture_thread = threading.Thread(target=FrameBG.capture_frames, daemon=True)
+            state.capture_thread.start()
+        except Exception as e:
+            print(f"Error: {e}")
+            # flash("Error", "success")
