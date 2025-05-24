@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleinnersite.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='css/logo.png') }}">
+
+    <title>Main Page</title>
+    <script src="{{ url_for('static', filename='indexscript2.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body onload="startTime()"></body>
+
+    {% include 'header.html' %}
+    <div class="videoex">
+        <div id="time"></div>
+        <img src="{{ url_for('video_feed', mode=current_mode or 'short') }}" alt="Video Stream" width="100%">
+        <div>Front School Camera</div>
+    </div>
+    <div class="log-visual">
+        <h2 id="nttype">Face Detection Log</h2>
+        <div class="loglist" id="name_list1"></div>
+    </div>
+    <div class="attendance-visual">
+        <h2 id="nttype2">Attendance Mode</h2>
+        <table id="student-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Face In DB</th>
+                    <th>Detected</th>
+    
+                </tr>
+            </thead>
+            <tbody id="student-body">
+            </tbody>
+        </table>
+    </div>
+    <div class="addface-visual">
+        <h2 id="nttype2">Add Student with face</h2>
+        <form action="{{ url_for('add_studentface') }}" method="POST">
+            <input type="hidden" id="classnumber" name="classid" value="10">
+            <input type="text" name="studentname" placeholder="Enter Name" required>
+            <input type="number" name="studentid" placeholder="Enter ID" required>
+            <button type="submit">Add Face</button>
+        </form>
+    </div>
+
+    <div class="removeface-visual">
+        <h2 id="nttype2">Remove Student</h2>
+        <form action="{{ url_for('remove_student') }}" method="POST" class="form-container">
+            <input type="hidden" id="classnumber2" name="classid" value="10">
+            <input type="hidden"  name="wherepage" value="inmain">
+            <input type="text" name="studentname" placeholder="Enter Name">
+            <p class="or-text">or</p>
+            <input type="number" name="studentid" placeholder="Enter ID">
+            <button type="submit">Remove Face</button>
+        </form>
+        <table id="student-table2">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Face In DB</th>
+    
+                </tr>
+            </thead>
+            <tbody id="student-body2">
+            </tbody>
+        </table>
+        <!-- <form action="{{ url_for('add_studentface') }}" method="POST">
+            <input type="hidden" id="classnumber" name="classid" value="10">
+            <input type="text" name="studentname" placeholder="Enter Name" required>
+            <input type="number" name="studentid" placeholder="Enter ID" required>
+            <button type="submit">Add Face</button>
+        </form> -->
+    </div>
+
+    <div class="vertical-bar">
+        <a onclick="close_side()" class="button">Face Detection Log mode</a>
+        <a onclick="attendance()" class="button">Attendance mode</a>
+        <a href="{{ url_for('face_lists') }}" class="button">Database Memory</a>
+        <a onclick="open_add_face(true)" class="button">Add Face to DB</a>
+        <a onclick="open_add_face(false)" class="button">Remove Face from DB</a>
+        <a href="{{ url_for('switch_mode', mode='short') }}" class="button">Cam Short Distance</a>
+        <a href="{{ url_for('switch_mode', mode='long') }}" class="button">Cam Long Distance</a>
+        <a href="{{ url_for('switch_mode', mode='regular') }}" class="button">Cam Without Detection</a>
+        <a onclick="facesindb()" class="button">Faces in DB</a>
+        <!-- <a onclick="addfaceold()" class="button">old add face</a> -->
+    </div>
+
+    <!-- <div class="side-bar" id="mysidenav">
+        <a onclick="close_side()" class="closebtn">&times;</a>
+        <form action="{{ url_for('add_face') }}" method="POST">
+            <input type="text" name="name" placeholder="Enter Name" required>
+            <button type="submit">Add Face</button>
+        </form> -->
+
+    </div>
+    <div class="side-bar" id="mysidenav2">
+        <a class="closebtn" onclick="close_side()">&times;</a>
+        <h2>Remove a Face</h2>
+        <form action="{{ url_for('remove_face') }}" method="POST">
+            <input type="text" name="name" placeholder="Enter Name" required>
+            <button type="submit">Remove Face</button>
+        </form>
+    </div>
+    <div class="side-bar" id="mysidenav3">
+        <a onclick="close_side()" class="closebtn">&times;</a>
+        <h2 id="titleat">Choose A Class:</h2>
+        <div class="vertical-bar2">
+            <button onclick="showrow(0)" class="dropdown-btn">Grades<i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-container">
+                    <div class="new-classes-here"></div>
+            </div>
+            <button class="dropdown-btn" id="gbutton" onclick="showClassattendance('General names',10)">General Names</button>
+        </div>
+        <div class="bottombuttons">
+            <button onclick="downloadFilteredStudentDataTXT()">Download Attendance sheet to notepad</button>
+            <button onclick="downloadFilteredStudentData()">Download Attendance sheet to Excel</button>
+            <button onclick="close_side()">Upload Attendance sheet to SQL</button>
+        </div>
+    </div>
+
+    
+    <div class="side-bar" id="mysidenav4">
+        <a onclick="close_side()" class="closebtn">&times;</a>
+        <h2>Faces:</h2>
+        <div class="faceslist" id="facesdblistid"></div>
+    </div>
+</body>
+</html>
