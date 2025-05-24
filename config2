@@ -1,0 +1,47 @@
+# config.py
+import threading
+
+# Camera and Threading Variables
+camera = None
+global_frame = None
+lock = threading.Lock()
+capture_thread = None
+
+# System States
+current_mode = "short"
+running = False
+
+# Face Recognition 
+known_face_encodings = []
+known_face_labels = []
+known_class_of_face = []
+known_face_id = []
+PROCESS_EVERY_N_FRAMES = 2
+current_frame_count = 0
+firstface = True
+identnames = ["jhon", "sam"]
+identclass = [0, 0]
+identid = [0, 0]
+unknowns_fc = 0
+last_label = ""
+
+tess_smg = "yes"
+
+attendance_mode = False
+
+# school data list
+grade_names_list = []
+class_names_list = []
+class_grade_id_list = []
+grade_id_list = []
+students_list = []
+class_id_list = []
+
+# Exporting Variables
+__all__ = [
+    'camera', 'global_frame', 'lock', 'capture_thread', 'current_mode', 'running',
+    'known_face_encodings', 'known_face_labels', 'PROCESS_EVERY_N_FRAMES', 'current_frame_count',
+    'firstface', 'identnames', 'tess_smg', 'unknowns_fc', 'last_label', 'attendance_mode',
+    'grade_names_list', 'class_names_list', 'class_grade_id_list', 'grade_id_list', 'students_list', 'class_id_list', 'identclass', 'identid',
+    'known_face_id', 'known_class_of_face'
+]
