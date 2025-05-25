@@ -82,23 +82,31 @@ class FrameBG:
                     continue
                 frame = state.global_frame.copy()
 
+#ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+#ggggggggggggggggggggggggggggggggggggggggggggg here is where i edited the code ggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+#ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+
             frame_count += 1
-
             if mode == 'short':
-                # skip frames
-                if frame_count % SKIP != 0:
-                    out = cv2.resize(frame, (640, 480), interpolation=cv2.INTER_LINEAR)
-                    jpg = cv2.imencode('.jpg', out)[1].tobytes()
-                    yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + jpg + b"\r\n")
-                    continue
+                  # I wrote that every other frame skip detection and send a normal stream.
+                  if frame_count % SKIP != 0: #every other 
+                      out = cv2.resize(frame, (640, 480), interpolation=cv2.INTER_LINEAR)
+                      jpg = cv2.imencode('.jpg', out)[1].tobytes() #for streaming 
+                      yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + jpg + b"\r\n")
+                      # the yield func is used to stream while continuing
+                      continue #starts the loop over so no face detection
 
-                # dlib HOG detection
-                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                faces = dlib_detector(rgb, 0)
-                for f in faces:
-                    shape = dlib_shape(rgb, f)
+
+                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) #converts to rgb
+                faces = dlib_detector(rgb, 0) #makes list of faces in frame
+                for f in faces: #for every face
+                    # these two lines find facial features and turn them into encodings
+                    shape = dlib_shape(rgb, f) 
                     enc = np.array(dlib_recog.compute_face_descriptor(rgb, shape))
-                    if state.known_face_encodings:
+                    
+                    if state.known_face_encodings: #if there are any encodings
+                        #code that calculates if any faces are a close match
+                        #i explain this later on in the book
                         dists = np.linalg.norm(state.known_face_encodings - enc, axis=1)
                         idx = np.argmin(dists)
                         label = state.known_face_labels[idx] if dists[idx] < 0.6 else 'Unknown'
@@ -106,45 +114,52 @@ class FrameBG:
                         label = 'Unknown'
 
                     if state.last_label != label:
-                        print("here1")
+                        #only writes if face isnt the same as face before that
                         state.identnames.append(label)
+                        #if unknown skips a space
                         if label == "Unknown":
                             state.identclass.append(0)
                             state.identid.append(0)
                         else:
-                            print(idx)
-                            print(state.known_face_labels[idx])
-                            print(state.known_face_id[idx])
+                            #adds class and id according to which face was detected
                             state.identclass.append(state.known_class_of_face[idx])
                             state.identid.append(state.known_face_id[idx])
                         state.last_label = label
                     elif label == "Unknown" and state.last_label != "Unknown":
-                        print("here2")
+                        #makes a counting list of num on unknown faces
                         state.unknowns_fc += 1
                         state.identnames.append(label + "." + str(state.unknowns_fc))
                         state.identclass.append(0)
                         state.identid.append(0)
-                     
+                    #gets face edges
                     x, y, w, h = f.left(), f.top(), f.width(), f.height()
+                    #rectangle frame | at so and so place | green |thikness
                     cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),1)
+                    # write text as label    | under box|     font is hershey      | size | color |
                     cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0),1)
-                # resize and stream
+                # resize turn into jpg and stream
                 frame = cv2.resize(frame, (640,480), interpolation=cv2.INTER_LINEAR)
                 jpg = cv2.imencode('.jpg', frame)[1].tobytes()
                 yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + jpg + b"\r\n")
 
+
             else:  # long mode
-                (h, w) = frame.shape[:2]
-                blob = cv2.dnn.blobFromImage(cv2.resize(frame,(300,300)),1.0,(300,300),(104.0,177.0,123.0))
-                ssd_net.setInput(blob)
+                (h, w) = frame.shape[:2] # gives the height and width for reshaping 
+                thumb = cv2.resize(frame, (300, 300)) #resizes the frame
+                #turns the image into a blob with better settings for detection
+                blob  = cv2.dnn.blobFromImage(thumb,1.0,(300, 300),(104.0, 177.0, 123.0))
+                #these 2 lines find possible faces
+                ssd_net.setInput(blob) #tells the model what the pic is
                 detections = ssd_net.forward()
                 rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                for i in range(detections.shape[2]):
+                for i in range(detections.shape[2]): #num of faces in array
                     conf = detections[0,0,i,2]
-                    if conf < 0.5: continue
+                    if conf < 0.5: continue #if not confident that there is face
+                    #the following 3 lines turns the pic into pic of face for dlib
                     box = (detections[0,0,i,3:7]*np.array([w,h,w,h])).astype(int)
                     x1,y1,x2,y2 = box
                     rect = dlib.rectangle(x1,y1,x2,y2)
+                    #makes same calculations as in short mode
                     shape = dlib_shape(rgb, rect)
                     enc = np.array(dlib_recog.compute_face_descriptor(rgb, shape))
                     if state.known_face_encodings:
